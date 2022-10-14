@@ -43,14 +43,14 @@ jobs:
 
     # run OpenLane to build the GDS
     - name: make GDS
-      run: |
-        docker run --rm \
-        -v $OPENLANE_ROOT:/openlane \
-        -v $(pwd):$PDK_ROOT \
-        -v $CURDIR:/work \
-        -e PDK_ROOT=$PDK_ROOT \
-        -u $(id -u $USER):$(id -g $USER) \
-        $OPENLANE_IMAGE_NAME \
+      run: >
+        docker run --rm
+        -v $OPENLANE_ROOT:/openlane
+        -v $(pwd):$PDK_ROOT
+        -v $CURDIR:/work
+        -e PDK_ROOT=$PDK_ROOT
+        -u $(id -u $USER):$(id -g $USER)
+        $OPENLANE_IMAGE_NAME
         /bin/bash -c "./flow.tcl -overwrite -design /work/src -run_path /work/runs -tag wokwi"
 
     # for debugging, show all the files
