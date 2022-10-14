@@ -20,7 +20,7 @@ def write_user_config(module_name, sources):
         for line, source in enumerate(sources):
             fh.write("    $::env(DESIGN_DIR)/" + source)
             if line != len(sources) - 1:
-                fh.write('\\\n')
+                fh.write(' \\\n')
         fh.write('"\n')
 
 
@@ -62,7 +62,7 @@ def get_project_source(yaml):
             logging.error("must be more than 1 source file")
             exit(1)
 
-        if not 'top_module' not in yaml['project']:
+        if 'top_module' not in yaml['project']:
             logging.error("must provide a top module name")
             exit(1)
 
