@@ -46,8 +46,8 @@ jobs:
       run: >
         docker run --rm
         -v $OPENLANE_ROOT:/openlane
-        -v $(pwd):$PDK_ROOT
-        -v $CURDIR:/work
+        -v $PDK_ROOT:$PDK_ROOT
+        -v $(pwd):/work
         -e PDK_ROOT=$PDK_ROOT
         -u $(id -u $USER):$(id -g $USER)
         $OPENLANE_IMAGE_NAME
