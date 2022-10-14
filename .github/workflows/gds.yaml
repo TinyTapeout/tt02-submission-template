@@ -8,8 +8,7 @@ permissions:
 jobs:
   gds:
     env:
-        OPENLANE_TAG:   2022.07.02_01.38.08
-        OPENLANE_IMAGE_NAME:    efabless/openlane:$OPENLANE_TAG
+        OPENLANE_IMAGE_NAME:    efabless/openlane:2022.07.02_01.38.08
         OPENLANE_ROOT:  /home/runner/openlane
         PDK_ROOT:       /home/runner/pdk
         PDK:            sky130B
