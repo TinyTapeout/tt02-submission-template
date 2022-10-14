@@ -41,9 +41,17 @@ jobs:
     - name: fetch Verilog and build config
       run: ./setup.py --create-user-config
 
-    # run the 'harden' rule in the Makefile to use OpenLane to build the GDS
+    # run OpenLane to build the GDS
     - name: make GDS
-      run: make harden
+      run: |
+        docker run --rm \
+        -v $OPENLANE_ROOT:/openlane \
+        -v $(pwd):$PDK_ROOT \
+        -v $CURDIR:/work \
+        -e PDK_ROOT=$PDK_ROOT \
+        -u $(id -u $USER):$(id -g $USER) \
+        $OPENLANE_IMAGE_NAME \
+        /bin/bash -c "./flow.tcl -overwrite -design /work/src -run_path /work/runs -tag wokwi"
 
     # for debugging, show all the files
     - name: show files

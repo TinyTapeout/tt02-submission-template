@@ -12,16 +12,20 @@ This repo is a template you can make a copy of for your own [ASIC](https://www.z
 
 When you edit the info.yaml to choose a different ID, the [GitHub Action](.github/workflows/gds.yaml) will fetch the digital netlist of your design from Wokwi.
 
-The design gets wrapped in some extra logic that builds a 'scan chain'. This is a way to put lots of designs onto one chip and still have access to them all. You can see [all of the technical details here](https://github.com/mattvenn/scan_wrapper).
-
 After that, the action uses the open source ASIC tool called [OpenLane](https://www.zerotoasiccourse.com/terminology/openlane/) to build the files needed to fabricate an ASIC.
 
 # What files get made?
 
-When the action is complete, you can [click here](https://github.com/mattvenn/wokwi-verilog-gds-test/actions) to see the latest build of your design. You need to download the zip file and take a look at the contents:
+When the action is complete, you can click on the 'Actions' tab above, choose the 'gds' action and then click on the latest result.
+You should see a page with the results of the build:
 
-* gds_render.svg - picture of your ASIC design
-* gds.html - zoomable picture of your ASIC design
+* Number of cells used
+* Length of wire used
+* A picture of your GDS
+* A link to open the interactive 3D viewer
+
+You can also download a zipped artifact that contains:
+
 * runs/wokwi/reports/final_summary_report.csv  - CSV file with lots of details about the design
 * runs/wokwi/reports/synthesis/1-synthesis.stat.rpt.strategy4 - list of the [standard cells](https://www.zerotoasiccourse.com/terminology/standardcell/) used by your design
 * runs/wokwi/results/final/gds/user_module.gds - the final [GDS](https://www.zerotoasiccourse.com/terminology/gds2/) file needed to make your design
