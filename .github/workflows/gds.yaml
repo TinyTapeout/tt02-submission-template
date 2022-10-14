@@ -21,30 +21,29 @@ jobs:
       uses: actions/checkout@v2
 
     # build PDK and fetch OpenLane
-#
-#    - name: pdk & caravel
-#      run: |
-#        cd $HOME
-#        git clone https://github.com/efabless/caravel_user_project.git -b mpw-7a
-#        cd caravel_user_project
-#        make setup
+
+    - name: pdk & caravel
+      run: |
+        cd $HOME
+        git clone https://github.com/efabless/caravel_user_project.git -b mpw-7a
+        cd caravel_user_project
+        make setup
 
     # need python
-#    - name: setup python
-#      uses: actions/setup-python@v2
-#      with:
-#        python-version: '3.7.7'
-#        cache: 'pip'
-#    - run: pip install -r requirements.txt
+    - name: setup python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.7.7'
+        cache: 'pip'
+    - run: pip install -r requirements.txt
 
     # fetch the Verilog from Wokwi API
-#    - name: fetch Verilog and build config
-#      run: ./setup.py --create-user-config
+    - name: fetch Verilog and build config
+      run: ./setup.py --create-user-config
 
     # run OpenLane to build the GDS
     - name: make GDS
       run: >
-        echo
         docker run --rm
         -v $OPENLANE_ROOT:/openlane
         -v $PDK_ROOT:$PDK_ROOT
