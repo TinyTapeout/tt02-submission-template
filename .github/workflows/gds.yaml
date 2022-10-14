@@ -47,13 +47,13 @@ jobs:
 
     # for debugging, show all the files
     - name: show files
-      run: find runs/wokwi/results
+      run: find runs/wokwi/
 
     - name: add summary
       run: |
         python << EOF >> $GITHUB_STEP_SUMMARY
         import csv
-        with open('runs/wokwi/reports/final_summary_report.csv') as f:
+        with open('runs/wokwi/reports/metrics.csv') as f:
             report = list(csv.DictReader(f))[0]
             keys = ['OpenDP_Util', 'cell_count', 'wire_length', 'AND', 'DFF', 'NAND', 'NOR', 'OR', 'XOR', 'XNOR', 'MUX']
             print(f'| { "|".join(keys) } |')
