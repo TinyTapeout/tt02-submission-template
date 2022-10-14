@@ -1,0 +1,223 @@
+name: gds
+# either manually started, or on a schedule
+on: [ push, workflow_dispatch ]
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+jobs:
+  gds:
+    env:
+        OPENLANE_TAG:   2022.07.02_01.38.08
+        OPENLANE_IMAGE_NAME:    efabless/openlane:$(OPENLANE_TAG)
+        OPENLANE_ROOT:  /home/runner/openlane
+        PDK_ROOT:       /home/runner/pdk
+        PDK:            sky130B
+
+    # ubuntu
+    runs-on: ubuntu-latest
+    steps:
+    # need the repo checked out
+    - name: checkout repo
+      uses: actions/checkout@v2
+
+    # build PDK and fetch OpenLane
+    - name: pdk & caravel
+      run: |
+        cd $HOME
+        git clone https://github.com/efabless/caravel_user_project.git -b mpw-7a
+        cd caravel_user_project
+        make setup
+
+    # need python
+    - name: setup python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.7.7'
+        cache: 'pip'
+    - run: pip install -r requirements.txt
+
+    # fetch the Verilog from Wokwi API
+    - name: fetch Verilog and build config
+      run: ./setup.py --create-user-config
+
+    # run the 'harden' rule in the Makefile to use OpenLane to build the GDS
+    - name: make GDS
+      run: make harden
+
+    # for debugging, show all the files
+    - name: show files
+      run: find runs/wokwi/results
+
+    - name: add summary
+      run: |
+        python << EOF >> $GITHUB_STEP_SUMMARY
+        import csv
+        with open('runs/wokwi/reports/final_summary_report.csv') as f:
+            report = list(csv.DictReader(f))[0]
+            keys = ['OpenDP_Util', 'cell_count', 'wire_length', 'AND', 'DFF', 'NAND', 'NOR', 'OR', 'XOR', 'XNOR', 'MUX']
+            print(f'| { "|".join(keys) } |')
+            print(f'| { "|".join(["-----"] * len(keys)) } |')
+            print(f'| { "|".join(report[k] for k in keys) } |')
+        EOF
+  
+    - name: populate src cache
+      uses: actions/cache@v2
+      with:
+        path: src
+        key: ${{ runner.os }}-src-${{ github.run_id }}
+
+    - name: populate runs cache
+      uses: actions/cache@v2
+      with:
+        path: runs
+        key: ${{ runner.os }}-runs-${{ github.run_id }}
+
+  svg:
+    needs: gds
+    runs-on: ubuntu-latest
+    steps:
+    - name: checkout repo
+      uses: actions/checkout@v2
+
+    - name: setup python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    - name: restore runs cache
+      uses: actions/cache@v2
+      with:
+        path: runs
+        key: ${{ runner.os }}-runs-${{ github.run_id }}
+
+    - name: create svg
+      run: |
+        python -m pip install gdstk
+        python << EOF
+        import gdstk
+        import pathlib
+
+        gds = sorted(pathlib.Path('runs').glob('wokwi/results/final/gds/*.gds'))
+        library = gdstk.read_gds(gds[-1])
+        top_cells = library.top_level()
+        top_cells[0].write_svg('gds_render.svg')
+        EOF
+
+    - name: populate svg cache
+      uses: actions/cache@v2
+      with:
+        path: 'gds_render.svg'
+        key: ${{ runner.os }}-svg-${{ github.run_id }}
+
+  viewer:
+    needs: gds
+    runs-on: ubuntu-latest
+    steps:
+    - name: checkout GDS2glTF repo
+      uses: actions/checkout@v2
+      with:
+        repository: mbalestrini/GDS2glTF
+
+    - name: checkout tinytapeout_gds_viewer repo
+      uses: actions/checkout@v2
+      with:
+        repository: mbalestrini/tinytapeout_gds_viewer
+        path: viewer
+
+    - name: setup python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    - name: restore runs cache
+      uses: actions/cache@v2
+      with:
+        path: runs
+        key: ${{ runner.os }}-runs-${{ github.run_id }}
+
+    - name: gds2gltf
+      run: |
+        python -m pip install -r requirements.txt
+        cp runs/wokwi/results/final/gds/*.gds tinytapeout.gds
+        python3 gds2gltf.py tinytapeout.gds
+        cp tinytapeout.gds.gltf viewer/
+
+    - name: populate viewer cache
+      uses: actions/cache@v2
+      with:
+        path: viewer
+        key: ${{ runner.os }}-viewer-${{ github.run_id }}
+
+  artifact:
+    needs:
+    - gds
+    runs-on: ubuntu-latest
+    steps:
+    - name: restore src cache
+      uses: actions/cache@v2
+      with:
+        path: src
+        key: ${{ runner.os }}-src-${{ github.run_id }}
+
+    - name: restore runs cache
+      uses: actions/cache@v2
+      with:
+        path: runs
+        key: ${{ runner.os }}-runs-${{ github.run_id }}
+
+    - name: upload artifact
+      uses: actions/upload-artifact@v2
+      with:
+          # path depends on the tag and the module name
+          name: GDS
+          path: |
+            src/*
+            runs/wokwi/results/final/*
+            runs/wokwi/reports/final_summary_report.csv
+
+  pages:
+    needs:
+    - svg
+    - viewer
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    outputs:
+      page_url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+    - name: restore svg cache
+      uses: actions/cache@v2
+      with:
+        path: 'gds_render.svg'
+        key: ${{ runner.os }}-svg-${{ github.run_id }}
+    - name: restore viewer cache
+      uses: actions/cache@v2
+      with:
+        path: viewer
+        key: ${{ runner.os }}-viewer-${{ github.run_id }}
+    - name: Setup Pages
+      uses: actions/configure-pages@v2
+    - name: Upload artifact
+      uses: actions/upload-pages-artifact@v1
+      with:
+        path: '.'
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v1
+
+  preview:
+    needs: pages
+    runs-on: ubuntu-latest
+    steps:
+    - name: add gds preview
+      run: |
+        PAGE_URL=${{ needs.pages.outputs.page_url }}
+        PAGE_URL=$(echo "$PAGE_URL" | sed -e 's/\/$//')
+        cat << EOF >> $GITHUB_STEP_SUMMARY
+        # layout
+        ![svg]($PAGE_URL/gds_render.svg)
+        # viewer
+        [open preview]($PAGE_URL/viewer/tinytapeout.html)
+        EOF
