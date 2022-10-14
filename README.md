@@ -32,6 +32,6 @@ You can also download a zipped artifact that contains:
 
 # What next?
 
-* Share your GDS on twitter, tag it #tinytapeout and [link me](https://twitter.com/matthewvenn)!
+* Share your GDS on twitter, tag it [#tinytapeout](https://twitter.com/search?q=%23tinytapeout) and [link me](https://twitter.com/matthewvenn)!
 * [Submit it to be made](https://docs.google.com/forms/d/e/1FAIpQLSc3ZF0AHKD3LoZRSmKX5byl-0AzrSK8ADeh0DtkZQX0bbr16w/viewform?usp=sf_link)
 * [Join the community](https://discord.gg/rPK2nSjxy8)
