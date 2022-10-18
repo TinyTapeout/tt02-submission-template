@@ -1,0 +1,206 @@
+#! /home/pbjames/Documents/ZeroToASIC/oss-cad-suite/bin/vvp
+:ivl_version "12.0 (devel)" "(s20150603-1148-gef01dd1e-dirty)";
+:ivl_delay_selection "TYPICAL";
+:vpi_time_precision + 0;
+:vpi_module "/home/pbjames/Documents/ZeroToASIC/oss-cad-suite/lib/ivl/system.vpi";
+:vpi_module "/home/pbjames/Documents/ZeroToASIC/oss-cad-suite/lib/ivl/vhdl_sys.vpi";
+:vpi_module "/home/pbjames/Documents/ZeroToASIC/oss-cad-suite/lib/ivl/vhdl_textio.vpi";
+:vpi_module "/home/pbjames/Documents/ZeroToASIC/oss-cad-suite/lib/ivl/v2005_math.vpi";
+:vpi_module "/home/pbjames/Documents/ZeroToASIC/oss-cad-suite/lib/ivl/va_math.vpi";
+S_0x555555f89cf0 .scope module, "buffer_cell" "buffer_cell" 2 3;
+ .timescale 0 0;
+    .port_info 0 /INPUT 1 "in";
+    .port_info 1 /OUTPUT 1 "out";
+o0x7f5bc9b44018 .functor BUFZ 1, C4<z>; HiZ drive
+L_0x555555fe93d0 .functor BUFZ 1, o0x7f5bc9b44018, C4<0>, C4<0>, C4<0>;
+v0x555555fc60f0_0 .net "in", 0 0, o0x7f5bc9b44018;  0 drivers
+v0x555555fb8690_0 .net "out", 0 0, L_0x555555fe93d0;  1 drivers
+S_0x555555f89e80 .scope module, "dffsr_cell" "dffsr_cell" 2 77;
+ .timescale 0 0;
+    .port_info 0 /INPUT 1 "clk";
+    .port_info 1 /INPUT 1 "d";
+    .port_info 2 /INPUT 1 "s";
+    .port_info 3 /INPUT 1 "r";
+    .port_info 4 /OUTPUT 1 "q";
+    .port_info 5 /OUTPUT 1 "notq";
+o0x7f5bc9b440d8 .functor BUFZ 1, C4<z>; HiZ drive
+v0x555555fb8ee0_0 .net "clk", 0 0, o0x7f5bc9b440d8;  0 drivers
+o0x7f5bc9b44108 .functor BUFZ 1, C4<z>; HiZ drive
+v0x555555fb8920_0 .net "d", 0 0, o0x7f5bc9b44108;  0 drivers
+v0x555555fe6b40_0 .net "notq", 0 0, L_0x555555fe94a0;  1 drivers
+v0x555555fe6be0_0 .var "q", 0 0;
+o0x7f5bc9b44198 .functor BUFZ 1, C4<z>; HiZ drive
+v0x555555fe6ca0_0 .net "r", 0 0, o0x7f5bc9b44198;  0 drivers
+o0x7f5bc9b441c8 .functor BUFZ 1, C4<z>; HiZ drive
+v0x555555fe6db0_0 .net "s", 0 0, o0x7f5bc9b441c8;  0 drivers
+E_0x555555fc2a90 .event posedge, v0x555555fe6ca0_0, v0x555555fe6db0_0, v0x555555fb8ee0_0;
+L_0x555555fe94a0 .reduce/nor v0x555555fe6be0_0;
+S_0x555555f8a010 .scope module, "mux_cell" "mux_cell" 2 54;
+ .timescale 0 0;
+    .port_info 0 /INPUT 1 "a";
+    .port_info 1 /INPUT 1 "b";
+    .port_info 2 /INPUT 1 "sel";
+    .port_info 3 /OUTPUT 1 "out";
+o0x7f5bc9b44318 .functor BUFZ 1, C4<z>; HiZ drive
+v0x555555fe6f30_0 .net "a", 0 0, o0x7f5bc9b44318;  0 drivers
+o0x7f5bc9b44348 .functor BUFZ 1, C4<z>; HiZ drive
+v0x555555fe7010_0 .net "b", 0 0, o0x7f5bc9b44348;  0 drivers
+v0x555555fe70d0_0 .net "out", 0 0, L_0x555555fe95a0;  1 drivers
+o0x7f5bc9b443a8 .functor BUFZ 1, C4<z>; HiZ drive
+v0x555555fe7170_0 .net "sel", 0 0, o0x7f5bc9b443a8;  0 drivers
+L_0x555555fe95a0 .functor MUXZ 1, o0x7f5bc9b44318, o0x7f5bc9b44348, o0x7f5bc9b443a8, C4<>;
+S_0x555555fc7970 .scope module, "nand_cell" "nand_cell" 2 37;
+ .timescale 0 0;
+    .port_info 0 /INPUT 1 "a";
+    .port_info 1 /INPUT 1 "b";
+    .port_info 2 /OUTPUT 1 "out";
+o0x7f5bc9b444c8 .functor BUFZ 1, C4<z>; HiZ drive
+o0x7f5bc9b444f8 .functor BUFZ 1, C4<z>; HiZ drive
+L_0x555555fe9700 .functor AND 1, o0x7f5bc9b444c8, o0x7f5bc9b444f8, C4<1>, C4<1>;
+v0x555555fe72b0_0 .net *"_ivl_0", 0 0, L_0x555555fe9700;  1 drivers
+v0x555555fe73b0_0 .net "a", 0 0, o0x7f5bc9b444c8;  0 drivers
+v0x555555fe7470_0 .net "b", 0 0, o0x7f5bc9b444f8;  0 drivers
+v0x555555fe7510_0 .net "out", 0 0, L_0x555555fe9800;  1 drivers
+L_0x555555fe9800 .reduce/nor L_0x555555fe9700;
+S_0x555555fc7b00 .scope module, "not_cell" "not_cell" 2 46;
+ .timescale 0 0;
+    .port_info 0 /INPUT 1 "in";
+    .port_info 1 /OUTPUT 1 "out";
+o0x7f5bc9b445e8 .functor BUFZ 1, C4<z>; HiZ drive
+v0x555555fe7650_0 .net "in", 0 0, o0x7f5bc9b445e8;  0 drivers
+v0x555555fe7710_0 .net "out", 0 0, L_0x555555fe9920;  1 drivers
+L_0x555555fe9920 .reduce/nor o0x7f5bc9b445e8;
+S_0x555555fc8e30 .scope module, "or_cell" "or_cell" 2 19;
+ .timescale 0 0;
+    .port_info 0 /INPUT 1 "a";
+    .port_info 1 /INPUT 1 "b";
+    .port_info 2 /OUTPUT 1 "out";
+o0x7f5bc9b446a8 .functor BUFZ 1, C4<z>; HiZ drive
+o0x7f5bc9b446d8 .functor BUFZ 1, C4<z>; HiZ drive
+L_0x555555fe99f0 .functor OR 1, o0x7f5bc9b446a8, o0x7f5bc9b446d8, C4<0>, C4<0>;
+v0x555555fe7830_0 .net "a", 0 0, o0x7f5bc9b446a8;  0 drivers
+v0x555555fe78f0_0 .net "b", 0 0, o0x7f5bc9b446d8;  0 drivers
+v0x555555fe79b0_0 .net "out", 0 0, L_0x555555fe99f0;  1 drivers
+S_0x555555fc9010 .scope module, "rising_edge_detect_tb" "rising_edge_detect_tb" 3 3;
+ .timescale 0 0;
+v0x555555fe8f70_0 .var "io_in", 7 0;
+v0x555555fe9030_0 .net "io_out", 7 0, L_0x555555fea120;  1 drivers
+S_0x555555fe7ad0 .scope module, "red" "rising_edge_detect" 3 19, 4 4 0, S_0x555555fc9010;
+ .timescale 0 0;
+    .port_info 0 /INPUT 8 "io_i";
+    .port_info 1 /OUTPUT 8 "io_o";
+L_0x555555fea080 .functor BUFZ 1, v0x555555fe86e0_0, C4<0>, C4<0>, C4<0>;
+v0x555555fe8810_0 .net *"_ivl_11", 0 0, L_0x555555fe9ee0;  1 drivers
+v0x555555fe8910_0 .net *"_ivl_15", 0 0, L_0x555555fe9fb0;  1 drivers
+v0x555555fe89f0_0 .net *"_ivl_19", 0 0, L_0x555555fea080;  1 drivers
+v0x555555fe8ab0_0 .net *"_ivl_24", 3 0, L_0x555555fea380;  1 drivers
+v0x555555fe8b90_0 .net "dff_o", 0 0, v0x555555fe86e0_0;  1 drivers
+v0x555555fe8c80_0 .net "io_i", 7 0, v0x555555fe8f70_0;  1 drivers
+v0x555555fe8d40_0 .net "io_o", 7 0, L_0x555555fea120;  alias, 1 drivers
+v0x555555fe8e20_0 .net "not_dff_o", 0 0, L_0x555555fe9af0;  1 drivers
+L_0x555555fe9be0 .part v0x555555fe8f70_0, 0, 1;
+L_0x555555fe9cd0 .part v0x555555fe8f70_0, 1, 1;
+L_0x555555fe9e40 .part v0x555555fe8f70_0, 1, 1;
+L_0x555555fe9ee0 .part v0x555555fe8f70_0, 0, 1;
+L_0x555555fe9fb0 .part v0x555555fe8f70_0, 1, 1;
+LS_0x555555fea120_0_0 .concat8 [ 1 1 1 1], L_0x555555fe9ee0, L_0x555555fe9fb0, L_0x555555fe9d70, L_0x555555fea080;
+LS_0x555555fea120_0_4 .concat8 [ 4 0 0 0], L_0x555555fea380;
+L_0x555555fea120 .concat8 [ 4 4 0 0], LS_0x555555fea120_0_0, LS_0x555555fea120_0_4;
+L_0x555555fea380 .part v0x555555fe8f70_0, 4, 4;
+S_0x555555fe7cd0 .scope module, "and1" "and_cell" 4 16, 2 10 0, S_0x555555fe7ad0;
+ .timescale 0 0;
+    .port_info 0 /INPUT 1 "a";
+    .port_info 1 /INPUT 1 "b";
+    .port_info 2 /OUTPUT 1 "out";
+L_0x555555fe9d70 .functor AND 1, L_0x555555fe9e40, L_0x555555fe9af0, C4<1>, C4<1>;
+v0x555555fe7f40_0 .net "a", 0 0, L_0x555555fe9e40;  1 drivers
+v0x555555fe8020_0 .net "b", 0 0, L_0x555555fe9af0;  alias, 1 drivers
+v0x555555fe80e0_0 .net "out", 0 0, L_0x555555fe9d70;  1 drivers
+S_0x555555fe8200 .scope module, "re_detect" "dff_cell" 4 10, 2 64 0, S_0x555555fe7ad0;
+ .timescale 0 0;
+    .port_info 0 /INPUT 1 "clk";
+    .port_info 1 /INPUT 1 "d";
+    .port_info 2 /OUTPUT 1 "q";
+    .port_info 3 /OUTPUT 1 "notq";
+v0x555555fe8470_0 .net "clk", 0 0, L_0x555555fe9be0;  1 drivers
+v0x555555fe8550_0 .net "d", 0 0, L_0x555555fe9cd0;  1 drivers
+v0x555555fe8610_0 .net "notq", 0 0, L_0x555555fe9af0;  alias, 1 drivers
+v0x555555fe86e0_0 .var "q", 0 0;
+E_0x555555fba460 .event posedge, v0x555555fe8470_0;
+L_0x555555fe9af0 .reduce/nor v0x555555fe86e0_0;
+S_0x555555fc66c0 .scope module, "xor_cell" "xor_cell" 2 28;
+ .timescale 0 0;
+    .port_info 0 /INPUT 1 "a";
+    .port_info 1 /INPUT 1 "b";
+    .port_info 2 /OUTPUT 1 "out";
+o0x7f5bc9b44bb8 .functor BUFZ 1, C4<z>; HiZ drive
+o0x7f5bc9b44be8 .functor BUFZ 1, C4<z>; HiZ drive
+L_0x555555fea470 .functor XOR 1, o0x7f5bc9b44bb8, o0x7f5bc9b44be8, C4<0>, C4<0>;
+v0x555555fe9100_0 .net "a", 0 0, o0x7f5bc9b44bb8;  0 drivers
+v0x555555fe91c0_0 .net "b", 0 0, o0x7f5bc9b44be8;  0 drivers
+v0x555555fe9280_0 .net "out", 0 0, L_0x555555fea470;  1 drivers
+    .scope S_0x555555f89e80;
+T_0 ;
+    %wait E_0x555555fc2a90;
+    %load/vec4 v0x555555fe6ca0_0;
+    %flag_set/vec4 8;
+    %jmp/0xz  T_0.0, 8;
+    %pushi/vec4 0, 0, 1;
+    %assign/vec4 v0x555555fe6be0_0, 0;
+    %jmp T_0.1;
+T_0.0 ;
+    %load/vec4 v0x555555fe6db0_0;
+    %flag_set/vec4 8;
+    %jmp/0xz  T_0.2, 8;
+    %pushi/vec4 1, 0, 1;
+    %assign/vec4 v0x555555fe6be0_0, 0;
+    %jmp T_0.3;
+T_0.2 ;
+    %load/vec4 v0x555555fb8920_0;
+    %assign/vec4 v0x555555fe6be0_0, 0;
+T_0.3 ;
+T_0.1 ;
+    %jmp T_0;
+    .thread T_0;
+    .scope S_0x555555fe8200;
+T_1 ;
+    %wait E_0x555555fba460;
+    %load/vec4 v0x555555fe8550_0;
+    %assign/vec4 v0x555555fe86e0_0, 0;
+    %jmp T_1;
+    .thread T_1;
+    .scope S_0x555555fc9010;
+T_2 ;
+    %vpi_call 3 8 "$monitor", "%8b  %8b", v0x555555fe8f70_0, v0x555555fe9030_0 {0 0 0};
+    %pushi/vec4 0, 0, 8;
+    %store/vec4 v0x555555fe8f70_0, 0, 8;
+    %delay 1, 0;
+    %pushi/vec4 1, 0, 8;
+    %store/vec4 v0x555555fe8f70_0, 0, 8;
+    %delay 1, 0;
+    %pushi/vec4 0, 0, 8;
+    %store/vec4 v0x555555fe8f70_0, 0, 8;
+    %delay 1, 0;
+    %pushi/vec4 2, 0, 8;
+    %store/vec4 v0x555555fe8f70_0, 0, 8;
+    %delay 1, 0;
+    %pushi/vec4 2, 0, 8;
+    %store/vec4 v0x555555fe8f70_0, 0, 8;
+    %delay 1, 0;
+    %pushi/vec4 3, 0, 8;
+    %store/vec4 v0x555555fe8f70_0, 0, 8;
+    %delay 1, 0;
+    %pushi/vec4 2, 0, 8;
+    %store/vec4 v0x555555fe8f70_0, 0, 8;
+    %delay 1, 0;
+    %pushi/vec4 0, 0, 8;
+    %store/vec4 v0x555555fe8f70_0, 0, 8;
+    %end;
+    .thread T_2;
+# The file index is used to find the file name in the following table.
+:file_names 5;
+    "N/A";
+    "<interactive>";
+    "./cells.v";
+    "rising_edge_detect_tb.v";
+    "rising_edge_detect.v";
