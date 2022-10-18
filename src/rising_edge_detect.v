@@ -2,8 +2,8 @@
 // Created 18 Oct 2022
 
 module jdrosent_rising_edge_detect(
-	input  [7:0] io_i,
-	output [7:0] io_o);
+	input  [7:0] io_in,
+	output [7:0] io_out);
 
 	wire dff_o, not_dff_o;
 
