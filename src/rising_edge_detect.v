@@ -8,18 +8,18 @@ module jdrosent_rising_edge_detect(
 	wire dff_o, not_dff_o;
 
 	dff_cell re_detect (
-		.clk(io_i[0]),
-		.d(io_i[1]),
+		.clk(io_in[0]),
+		.d(io_in[1]),
 		.q(dff_o),
 		.notq(not_dff_o));
 	
 	and_cell and1 (
-		.a(io_i[1]),
+		.a(io_in[1]),
 		.b(not_dff_o),
-		.out(io_o[2]));
+		.out(io_out[2]));
 	
-	assign io_o[0] = io_i[0];
-	assign io_o[1] = io_i[1];
-	assign io_o[3] = dff_o;
-	assign io_o[7:4] = io_i[7:4];
+	assign io_out[0] = io_in[0];
+	assign io_out[1] = io_in[1];
+	assign io_out[3] = dff_o;
+	assign io_out[7:4] = io_in[7:4];
 endmodule
