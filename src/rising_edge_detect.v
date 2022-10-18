@@ -1,7 +1,7 @@
 // Rising edge detect module
 // Created 18 Oct 2022
 
-module rising_edge_detect(
+module jdrosent_rising_edge_detect(
 	input  [7:0] io_i,
 	output [7:0] io_o);
 

@@ -16,6 +16,6 @@ module rising_edge_detect_tb ();
         #1 io_in = 8'h00;
     end
 
-    rising_edge_detect red(.io_i(io_in),
+    jdrosent_rising_edge_detect red(.io_i(io_in),
                    .io_o(io_out));
 endmodule 
