@@ -21,9 +21,9 @@ documentation:
   how_to_test:  "Enable the clock..."      # Instructions on how someone could test your project, include things like what buttons do what and how to set the clock if needed
   external_hw:  "Clock, Switches, 7-segment display"      # Describe any external hardware needed
   language:     "wokwi" # other examples include Verilog, Amaranth, VHDL, etc
-  doc_link:     "N/A"      # URL to longer form documentation, eg the README.md in your repository
+  doc_link:     "https://github.com/jdrosent/tt02-submission-template/blob/main/README.md"      # URL to longer form documentation, eg the README.md in your repository
   clock_hz:     0       # Clock frequency in Hz (if required)
-  picture:      "N/A"      # relative path to a picture in your repository
+  picture:      "src/risingedge.png"      # relative path to a picture in your repository
   inputs:               # a description of what the inputs do
     - clock
     - reset
