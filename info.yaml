@@ -1,11 +1,11 @@
 --- 
 # TinyTapeout project information
 project:
-  wokwi_id:    0 #345796060788032082       # If using wokwi, set this to your project's ID
-  source_files:        # If using an HDL, set wokwi_id as 0 and uncomment and list your source files here. Source files must be in ./src
-    - cells.v
-    - rising_edge_detect.v
-  top_module:  "jdrosent_rising_edge_detect"      # put the name of your top module here, make it unique by prepending your github username
+  wokwi_id:    339800239192932947        # If using wokwi, set this to your project's ID
+#  source_files:        # If using an HDL, set wokwi_id as 0 and uncomment and list your source files here. Source files must be in ./src
+#    - file1.v
+#    - file2.v
+#  top_module:  ""      # put the name of your top module here, make it unique by prepending your github username
 
 # As everyone will have access to all designs, try to make it easy for someone new to your design to know what
 # it does and how to operate it.
@@ -14,16 +14,16 @@ project:
 #
 # This info will be automatically collected and used to make a datasheet for the chip.
 documentation: 
-  author:       "James R."      # Your name
-  title:        "Rising Edge Detect"      # Project title
-  description:  "Detects a rising edge on SW2"      # Short description of what your project does
-  how_it_works: "Using a DFF, compares the current and past states."      # Longer description of how the project works
-  how_to_test:  "Enable the clock..."      # Instructions on how someone could test your project, include things like what buttons do what and how to set the clock if needed
-  external_hw:  "Clock, Switches, 7-segment display"      # Describe any external hardware needed
-  language:     "Verilog" # other examples include Verilog, Amaranth, VHDL, etc
-  doc_link:     "https://github.com/jdrosent/tt02-submission-template/blob/main/README.md"      # URL to longer form documentation, eg the README.md in your repository
+  author:       ""      # Your name
+  title:        ""      # Project title
+  description:  ""      # Short description of what your project does
+  how_it_works: ""      # Longer description of how the project works
+  how_to_test:  ""      # Instructions on how someone could test your project, include things like what buttons do what and how to set the clock if needed
+  external_hw:  ""      # Describe any external hardware needed
+  language:     "wokwi" # other examples include Verilog, Amaranth, VHDL, etc
+  doc_link:     ""      # URL to longer form documentation, eg the README.md in your repository
   clock_hz:     0       # Clock frequency in Hz (if required)
-  picture:      "risingedge.png"      # relative path to a picture in your repository
+  picture:      ""      # relative path to a picture in your repository
   inputs:               # a description of what the inputs do
     - clock
     - reset
