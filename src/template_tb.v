@@ -16,6 +16,6 @@ module template_tb ();
         #1 io_in = 8'b00000000;
     end
 
-    githubusername_top_template test(.io_i(io_in),
+    githubusername_top_template dut(.io_i(io_in),
                    .io_o(io_out));
 endmodule 
