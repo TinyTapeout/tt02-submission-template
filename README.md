@@ -17,7 +17,7 @@ After that, the action uses the open source ASIC tool called [OpenLane](https://
 # What files get made?
 
 When the action is complete, you can click on the 'Actions' tab above, choose the 'gds' action and then click on the latest result.
-You should see a page with the results of the build:
+You should see a page with the results of the build (you may need to scroll down):
 
 * Number of cells used
 * Length of wire used
