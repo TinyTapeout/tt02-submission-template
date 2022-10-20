@@ -24,5 +24,5 @@ jobs:
 
     # fetch the Verilog from Wokwi API
     - name: fetch Verilog and build config
-      run: ./setup.py --check-docs
+      run: ./configure.py --check-docs
 

@@ -39,7 +39,7 @@ jobs:
 
     # fetch the Verilog from Wokwi API
     - name: fetch Verilog and build config
-      run: ./setup.py --create-user-config
+      run: ./configure.py --create-user-config
 
     # run OpenLane to build the GDS
     - name: make GDS
@@ -51,23 +51,14 @@ jobs:
         -e PDK_ROOT=$PDK_ROOT
         -u $(id -u $USER):$(id -g $USER)
         $OPENLANE_IMAGE_NAME
-        /bin/bash -c "./flow.tcl -overwrite -design /work/src -run_path /work/runs -tag wokwi"
+        /bin/bash -c "./flow.tcl -verbose 2 -overwrite -design /work/src -run_path /work/runs -tag wokwi"
 
     # for debugging, show all the files
     - name: show files
       run: find runs/wokwi/
 
     - name: add summary
-      run: |
-        python << EOF >> $GITHUB_STEP_SUMMARY
-        import csv
-        with open('runs/wokwi/reports/metrics.csv') as f:
-            report = list(csv.DictReader(f))[0]
-            keys = ['OpenDP_Util', 'cell_count', 'wire_length', 'AND', 'DFF', 'NAND', 'NOR', 'OR', 'XOR', 'XNOR', 'MUX']
-            print(f'| { "|".join(keys) } |')
-            print(f'| { "|".join(["-----"] * len(keys)) } |')
-            print(f'| { "|".join(report[k] for k in keys) } |')
-        EOF
+      run: ./configure.py --get-stats >> $GITHUB_STEP_SUMMARY
   
     - name: populate src cache
       uses: actions/cache@v2
