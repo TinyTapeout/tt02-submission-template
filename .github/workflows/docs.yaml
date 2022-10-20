@@ -12,11 +12,11 @@ jobs:
     steps:
     # need the repo checked out
     - name: checkout repo
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
     # need python
     - name: setup python
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v4
       with:
         python-version: '3.7.7'
         cache: 'pip'

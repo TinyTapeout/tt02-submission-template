@@ -18,7 +18,7 @@ jobs:
     steps:
     # need the repo checked out
     - name: checkout repo
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
     # build PDK and fetch OpenLane
 
@@ -31,7 +31,7 @@ jobs:
 
     # need python
     - name: setup python
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v4
       with:
         python-version: '3.7.7'
         cache: 'pip'
@@ -61,13 +61,13 @@ jobs:
       run: ./configure.py --get-stats >> $GITHUB_STEP_SUMMARY
   
     - name: populate src cache
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       with:
         path: src
         key: ${{ runner.os }}-src-${{ github.run_id }}
 
     - name: populate runs cache
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       with:
         path: runs
         key: ${{ runner.os }}-runs-${{ github.run_id }}
@@ -77,7 +77,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: checkout repo
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
     - name: setup python
       uses: actions/setup-python@v4
@@ -85,7 +85,7 @@ jobs:
         python-version: '3.10'
 
     - name: restore runs cache
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       with:
         path: runs
         key: ${{ runner.os }}-runs-${{ github.run_id }}
@@ -104,7 +104,7 @@ jobs:
         EOF
 
     - name: populate svg cache
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       with:
         path: 'gds_render.svg'
         key: ${{ runner.os }}-svg-${{ github.run_id }}
@@ -114,12 +114,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: checkout GDS2glTF repo
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
       with:
         repository: mbalestrini/GDS2glTF
 
     - name: checkout tinytapeout_gds_viewer repo
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
       with:
         repository: mbalestrini/tinytapeout_gds_viewer
         path: viewer
@@ -130,7 +130,7 @@ jobs:
         python-version: '3.10'
 
     - name: restore runs cache
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       with:
         path: runs
         key: ${{ runner.os }}-runs-${{ github.run_id }}
@@ -143,7 +143,7 @@ jobs:
         cp tinytapeout.gds.gltf viewer/
 
     - name: populate viewer cache
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       with:
         path: viewer
         key: ${{ runner.os }}-viewer-${{ github.run_id }}
@@ -154,19 +154,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: restore src cache
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       with:
         path: src
         key: ${{ runner.os }}-src-${{ github.run_id }}
 
     - name: restore runs cache
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       with:
         path: runs
         key: ${{ runner.os }}-runs-${{ github.run_id }}
 
     - name: upload artifact
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
           # path depends on the tag and the module name
           name: GDS
@@ -187,12 +187,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: restore svg cache
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       with:
         path: 'gds_render.svg'
         key: ${{ runner.os }}-svg-${{ github.run_id }}
     - name: restore viewer cache
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       with:
         path: viewer
         key: ${{ runner.os }}-viewer-${{ github.run_id }}
