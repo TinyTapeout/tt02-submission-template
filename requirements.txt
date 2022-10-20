@@ -1,6 +1,2 @@
-gdstk
-gdspy
-pyclipper
-mapbox_earcut
 PyYAML
 requests
