@@ -1,5 +1,3 @@
-`include "cells.v"
-
 module template_tb ();
     reg  [7:0] io_in;
     wire [7:0] io_out;
