@@ -19,10 +19,8 @@ jobs:
       uses: actions/setup-python@v4
       with:
         python-version: '3.7.7'
-        cache: 'pip'
-    - run: pip install -r requirements.txt
+    - run: pip install requests PyYAML
 
     # fetch the Verilog from Wokwi API
     - name: fetch Verilog and build config
       run: ./configure.py --check-docs
-
