@@ -14,6 +14,13 @@ When you edit the info.yaml to choose a different ID, the [GitHub Action](.githu
 
 After that, the action uses the open source ASIC tool called [OpenLane](https://www.zerotoasiccourse.com/terminology/openlane/) to build the files needed to fabricate an ASIC.
 
+# Setup
+
+Due to Github limitations, you need to do some work to get everything to work.
+
+1. Go to Actons tab and press enable Github Actions
+2. Go to Settings tab and select Pages, then change Source from `Deploy from a branch` to `Github Actions`
+
 # What files get made?
 
 When the action is complete, you can click on the 'Actions' tab above, choose the 'gds' action and then click on the latest result.
@@ -26,8 +33,8 @@ You should see a page with the results of the build:
 
 You can also download a zipped artifact that contains:
 
-* runs/wokwi/reports/final_summary_report.csv  - CSV file with lots of details about the design
-* runs/wokwi/reports/synthesis/1-synthesis.stat.rpt.strategy4 - list of the [standard cells](https://www.zerotoasiccourse.com/terminology/standardcell/) used by your design
+* runs/wokwi/reports/metrics.csv  - CSV file with lots of details about the design
+* runs/wokwi/reports/synthesis/1-synthesis.AREA 0.stat.rpt - list of the [standard cells](https://www.zerotoasiccourse.com/terminology/standardcell/) used by your design
 * runs/wokwi/results/final/gds/user_module.gds - the final [GDS](https://www.zerotoasiccourse.com/terminology/gds2/) file needed to make your design
 
 # What next?
