@@ -31,11 +31,10 @@ jobs:
 
     # need python
     - name: setup python
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v4
       with:
         python-version: '3.7.7'
-        cache: 'pip'
-    - run: pip install -r requirements.txt
+    - run: pip install PyYAML requests
 
     # fetch the Verilog from Wokwi API
     - name: fetch Verilog and build config
@@ -68,7 +67,7 @@ jobs:
             print(f'| { "|".join(["-----"] * len(keys)) } |')
             print(f'| { "|".join(report[k] for k in keys) } |')
         EOF
-  
+
     - name: populate src cache
       uses: actions/cache@v2
       with:
@@ -146,7 +145,7 @@ jobs:
 
     - name: gds2gltf
       run: |
-        python -m pip install -r requirements.txt
+        python -m pip install gdspy numpy pygltflib triangle
         cp runs/wokwi/results/final/gds/*.gds tinytapeout.gds
         python3 gds2gltf.py tinytapeout.gds
         cp tinytapeout.gds.gltf viewer/
@@ -182,7 +181,8 @@ jobs:
           path: |
             src/*
             runs/wokwi/results/final/*
-            runs/wokwi/reports/final_summary_report.csv
+            runs/wokwi/reports/metrics.csv
+            runs/wokwi/reports/synthesis/1-synthesis.AREA 0.stat.rpt
 
   pages:
     needs:
