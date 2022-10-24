@@ -15,7 +15,7 @@ Edit the [info.yaml](info.yaml) and change the wokwi_id to match your project.
 Please see the instructions for:
 
 * [Enabling GitHub Actions](https://tinytapeout.com/faq/#when-i-commit-my-change-the-gds-action-isnt-running)
-* [Enabling GitHub Pagess](https://tinytapeout.com/faq/#my-github-action-is-failing-on-the-pages-part)
+* [Enabling GitHub Pages](https://tinytapeout.com/faq/#my-github-action-is-failing-on-the-pages-part)
 
 ## How does it work?
 
