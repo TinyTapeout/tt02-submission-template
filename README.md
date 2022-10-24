@@ -26,6 +26,7 @@ After that, the action uses the open source ASIC tool called [OpenLane](https://
 ## Resources
 
 * [FAQ](https://tinytapeout.com/faq/)
+* [Digital design lessons](https://tinytapeout.com/digital_design/)
 * [Join the community](https://discord.gg/rPK2nSjxy8)
 
 ## What next?
