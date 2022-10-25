@@ -18,7 +18,7 @@ jobs:
     steps:
     # need the repo checked out
     - name: checkout repo
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
     # build PDK and fetch OpenLane
 
@@ -31,15 +31,14 @@ jobs:
 
     # need python
     - name: setup python
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v4
       with:
         python-version: '3.7.7'
-        cache: 'pip'
-    - run: pip install -r requirements.txt
+    - run: pip install requests PyYAML
 
     # fetch the Verilog from Wokwi API
     - name: fetch Verilog and build config
-      run: ./setup.py --create-user-config
+      run: ./configure.py --create-user-config
 
     # run OpenLane to build the GDS
     - name: make GDS
@@ -51,32 +50,23 @@ jobs:
         -e PDK_ROOT=$PDK_ROOT
         -u $(id -u $USER):$(id -g $USER)
         $OPENLANE_IMAGE_NAME
-        /bin/bash -c "./flow.tcl -overwrite -design /work/src -run_path /work/runs -tag wokwi"
+        /bin/bash -c "./flow.tcl -verbose 2 -overwrite -design /work/src -run_path /work/runs -tag wokwi"
 
     # for debugging, show all the files
     - name: show files
       run: find runs/wokwi/
 
     - name: add summary
-      run: |
-        python << EOF >> $GITHUB_STEP_SUMMARY
-        import csv
-        with open('runs/wokwi/reports/metrics.csv') as f:
-            report = list(csv.DictReader(f))[0]
-            keys = ['OpenDP_Util', 'cell_count', 'wire_length', 'AND', 'DFF', 'NAND', 'NOR', 'OR', 'XOR', 'XNOR', 'MUX']
-            print(f'| { "|".join(keys) } |')
-            print(f'| { "|".join(["-----"] * len(keys)) } |')
-            print(f'| { "|".join(report[k] for k in keys) } |')
-        EOF
-  
+      run: ./configure.py --get-stats >> $GITHUB_STEP_SUMMARY
+
     - name: populate src cache
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       with:
         path: src
         key: ${{ runner.os }}-src-${{ github.run_id }}
 
     - name: populate runs cache
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       with:
         path: runs
         key: ${{ runner.os }}-runs-${{ github.run_id }}
@@ -86,7 +76,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: checkout repo
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
     - name: setup python
       uses: actions/setup-python@v4
@@ -94,7 +84,7 @@ jobs:
         python-version: '3.10'
 
     - name: restore runs cache
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       with:
         path: runs
         key: ${{ runner.os }}-runs-${{ github.run_id }}
@@ -113,7 +103,7 @@ jobs:
         EOF
 
     - name: populate svg cache
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       with:
         path: 'gds_render.svg'
         key: ${{ runner.os }}-svg-${{ github.run_id }}
@@ -123,12 +113,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: checkout GDS2glTF repo
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
       with:
         repository: mbalestrini/GDS2glTF
 
     - name: checkout tinytapeout_gds_viewer repo
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
       with:
         repository: mbalestrini/tinytapeout_gds_viewer
         path: viewer
@@ -139,20 +129,20 @@ jobs:
         python-version: '3.10'
 
     - name: restore runs cache
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       with:
         path: runs
         key: ${{ runner.os }}-runs-${{ github.run_id }}
 
     - name: gds2gltf
       run: |
-        python -m pip install -r requirements.txt
+        python -m pip install numpy gdspy triangle pygltflib
         cp runs/wokwi/results/final/gds/*.gds tinytapeout.gds
         python3 gds2gltf.py tinytapeout.gds
         cp tinytapeout.gds.gltf viewer/
 
     - name: populate viewer cache
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       with:
         path: viewer
         key: ${{ runner.os }}-viewer-${{ github.run_id }}
@@ -163,26 +153,27 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: restore src cache
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       with:
         path: src
         key: ${{ runner.os }}-src-${{ github.run_id }}
 
     - name: restore runs cache
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       with:
         path: runs
         key: ${{ runner.os }}-runs-${{ github.run_id }}
 
     - name: upload artifact
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
           # path depends on the tag and the module name
           name: GDS
           path: |
             src/*
             runs/wokwi/results/final/*
-            runs/wokwi/reports/final_summary_report.csv
+            runs/wokwi/reports/metrics.csv
+            runs/wokwi/reports/synthesis/1-synthesis.AREA 0.stat.rpt
 
   pages:
     needs:
@@ -196,12 +187,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: restore svg cache
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       with:
         path: 'gds_render.svg'
         key: ${{ runner.os }}-svg-${{ github.run_id }}
     - name: restore viewer cache
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       with:
         path: viewer
         key: ${{ runner.os }}-viewer-${{ github.run_id }}
@@ -213,7 +204,7 @@ jobs:
         path: '.'
     - name: Deploy to GitHub Pages
       id: deployment
-      uses: actions/deploy-pages@v1
+      uses: actions/deploy-pages@v1.2.2
 
   preview:
     needs: pages

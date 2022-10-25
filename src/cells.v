@@ -1,3 +1,9 @@
+/* 
+This file provides the mapping from the Wokwi modules to Verilog HDL
+
+It's only needed for Wokwi designs
+
+*/
 `define default_netname none
 
 module buffer_cell (

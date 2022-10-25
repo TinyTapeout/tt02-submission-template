@@ -5,6 +5,8 @@ import os
 import yaml
 import logging
 import sys
+import csv
+import re
 
 
 def load_yaml(yaml_file):
@@ -88,10 +90,28 @@ def get_top_module(yaml):
         return yaml['project']['top_module']
 
 
+def get_stats():
+    cells = 0
+    with open('runs/wokwi/reports/synthesis/1-synthesis.AREA 0.stat.rpt') as f:
+        for line in f.readlines():
+            m = re.search(r'Number of cells:\s+(\d+)', line)
+            if m is not None:
+                print(line)
+                cells = m.group(1)
+    with open('runs/wokwi/reports/metrics.csv') as f:
+        report = list(csv.DictReader(f))[0]
+        report['cell_count'] = cells  # cell count is broken ATM
+        keys = ['OpenDP_Util', 'cell_count', 'wire_length', 'AND', 'DFF', 'NAND', 'NOR', 'OR', 'XOR', 'XNOR', 'MUX']
+        print(f'| { "|".join(keys) } |')
+        print(f'| { "|".join(["-----"] * len(keys)) } |')
+        print(f'| { "|".join(report[k] for k in keys) } |')
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="TT setup")
 
     parser.add_argument('--check-docs', help="check the documentation part of the yaml", action="store_const", const=True)
+    parser.add_argument('--get-stats', help="print some stats from the run", action="store_const", const=True)
     parser.add_argument('--create-user-config', help="create the user_config.tcl file with top module and source files", action="store_const", const=True)
     parser.add_argument('--debug', help="debug logging", action="store_const", dest="loglevel", const=logging.DEBUG, default=logging.INFO)
     parser.add_argument('--yaml', help="yaml file to load", default='info.yaml')
@@ -110,12 +130,15 @@ if __name__ == '__main__':
     ch.setFormatter(log_format)
     log.addHandler(ch)
 
-    if args.check_docs:
+    if args.get_stats:
+        get_stats()
+
+    elif args.check_docs:
         logging.info("checking docs")
         config = load_yaml(args.yaml)
         check_docs(config)
 
-    if args.create_user_config:
+    elif args.create_user_config:
         logging.info("creating include file")
         config = load_yaml(args.yaml)
         source_files = get_project_source(config)
