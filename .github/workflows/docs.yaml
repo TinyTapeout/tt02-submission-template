@@ -24,3 +24,9 @@ jobs:
     # fetch the Verilog from Wokwi API
     - name: fetch Verilog and build config
       run: ./configure.py --check-docs
+
+    # make an artifact
+    - name: upload artifact
+      uses: actions/upload-artifact@v3
+      with:
+          name: info.yaml
