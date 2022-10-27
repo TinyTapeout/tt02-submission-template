@@ -12,9 +12,9 @@ async def test_7seg(dut):
     cocotb.fork(clock.start())
     
     dut._log.info("reset")
-    dut.rst = 1
+    dut.rst.value = 1
     await ClockCycles(dut.clk, 10)
-    dut.rst = 0
+    dut.rst.value = 0
 
     dut._log.info("check all segments")
     for i in range(10):
