@@ -29,5 +29,5 @@ jobs:
     - name: upload artifact
       uses: actions/upload-artifact@v3
       with:
-          name: info
+          name: docs
           path: info.yaml
