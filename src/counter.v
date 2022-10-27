@@ -1,6 +1,6 @@
 `default_nettype none
 
-module seven_segment_seconds (
+module seven_segment_seconds #( parameter MAX_COUNT = 16000000 ) (
   input [7:0] io_in,
   output [7:0] io_out
 );
@@ -13,18 +13,6 @@ module seven_segment_seconds (
     // external clock is 16MHz, so need 24 bit counter
     reg [23:0] second_counter;
     reg [3:0] digit;
-
-    `ifdef COCOTB_SIM
-        initial begin
-            $dumpfile ("seven_segment_seconds.vcd");
-            $dumpvars (0, seven_segment_seconds);
-            #1;
-        end
-        localparam MAX_COUNT = 100;
-    `else
-        localparam MAX_COUNT = 16_000_000;
-    `endif
-
 
     always @(posedge clk) begin
         // if reset, set counter to 0
