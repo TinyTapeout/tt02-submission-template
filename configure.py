@@ -144,3 +144,5 @@ if __name__ == '__main__':
         source_files = get_project_source(config)
         top_module = get_top_module(config)
         write_user_config(top_module, source_files)
+        # keep a copy of the info.yaml in src to get archived in the GDS artifact
+        os.system('cp info.yaml src/info.yaml')
