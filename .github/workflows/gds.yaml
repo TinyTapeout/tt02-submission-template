@@ -170,6 +170,7 @@ jobs:
           # path depends on the tag and the module name
           name: GDS
           path: |
+            info.yaml
             src/*
             runs/wokwi/results/final/*
             runs/wokwi/reports/metrics.csv
