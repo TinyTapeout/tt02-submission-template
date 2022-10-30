@@ -196,6 +196,15 @@ jobs:
       with:
         path: viewer
         key: ${{ runner.os }}-viewer-${{ github.run_id }}
+    - name: generate redirect to viewer
+      run: |
+        cat << EOF >> index.html
+            <!DOCTYPE html>
+            <meta charset="utf-8">
+            <title>Redirecting to viewer</title>
+            <meta http-equiv="refresh" content="0; URL=viewer/tinytapeout.html">
+            <link rel="canonical" href="viewer/tinytapeout.html">
+        EOF
     - name: Setup Pages
       uses: actions/configure-pages@v2
     - name: Upload artifact
