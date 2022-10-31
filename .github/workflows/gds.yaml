@@ -137,7 +137,7 @@ jobs:
     - name: populate viewer cache
       uses: actions/cache@v3
       with:
-        path: viewer
+        path: 'tinytapeout.gds.gltf'
         key: ${{ runner.os }}-viewer-${{ github.run_id }}
 
   artifact:
@@ -187,7 +187,7 @@ jobs:
     - name: restore viewer cache
       uses: actions/cache@v3
       with:
-        path: viewer
+        path: 'tinytapeout.gds.gltf'
         key: ${{ runner.os }}-viewer-${{ github.run_id }}
     - name: generate redirect to viewer
       run: |
@@ -202,7 +202,7 @@ jobs:
           </head>
           <body>
             <script>
-              location.href = "https://gds-viewer.tinytapeout.com/?model=" + encodeURIComponent(location.href + '/tinytapeout.gltf');
+              location.href = "https://gds-viewer.tinytapeout.com/?model=" + encodeURIComponent(location.href + '/tinytapeout.gds.gltf');
             </script>
           </body>
           </html>
@@ -229,5 +229,5 @@ jobs:
         # layout
         ![svg]($PAGE_URL/gds_render.svg)
         # viewer
-        [open preview](https://gds-viewer.tinytapeout.com/?model=$PAGE_URL/tinytapeout.gltf)
+        [open preview](https://gds-viewer.tinytapeout.com/?model=$PAGE_URL/tinytapeout.gds.gltf)
         EOF
