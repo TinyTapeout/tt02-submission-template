@@ -117,12 +117,6 @@ jobs:
       with:
         repository: mbalestrini/GDS2glTF
 
-    - name: checkout tinytapeout_gds_viewer repo
-      uses: actions/checkout@v3
-      with:
-        repository: mbalestrini/tinytapeout_gds_viewer
-        path: viewer
-
     - name: setup python
       uses: actions/setup-python@v4
       with:
@@ -139,12 +133,11 @@ jobs:
         python -m pip install numpy gdspy triangle pygltflib
         cp runs/wokwi/results/final/gds/*.gds tinytapeout.gds
         python3 gds2gltf.py tinytapeout.gds
-        cp tinytapeout.gds.gltf viewer/
 
     - name: populate viewer cache
       uses: actions/cache@v3
       with:
-        path: viewer
+        path: 'tinytapeout.gds.gltf'
         key: ${{ runner.os }}-viewer-${{ github.run_id }}
 
   artifact:
@@ -194,8 +187,26 @@ jobs:
     - name: restore viewer cache
       uses: actions/cache@v3
       with:
-        path: viewer
+        path: 'tinytapeout.gds.gltf'
         key: ${{ runner.os }}-viewer-${{ github.run_id }}
+    - name: generate redirect to viewer
+      run: |
+        cat << EOF >> index.html
+          <!DOCTYPE html>
+          <html lang="en">
+          <head>
+            <meta charset="UTF-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Redirecting to GDS Viewer...</title>
+          </head>
+          <body>
+            <script>
+              location.href = "https://gds-viewer.tinytapeout.com/?model=" + encodeURIComponent(location.href + '/tinytapeout.gds.gltf');
+            </script>
+          </body>
+          </html>
+        EOF
     - name: Setup Pages
       uses: actions/configure-pages@v2
     - name: Upload artifact
@@ -218,5 +229,5 @@ jobs:
         # layout
         ![svg]($PAGE_URL/gds_render.svg)
         # viewer
-        [open preview]($PAGE_URL/viewer/tinytapeout.html)
+        [open preview](https://gds-viewer.tinytapeout.com/?model=$PAGE_URL/tinytapeout.gds.gltf)
         EOF
