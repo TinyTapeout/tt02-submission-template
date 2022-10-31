@@ -52,7 +52,7 @@ def get_project_source(yaml):
     # else it's HDL, so check source files
     else:
         if 'source_files' not in yaml['project']:
-            logging.error("source files must be provided if wokiw_id is set to 0")
+            logging.error("source files must be provided if wokwi_id is set to 0")
             exit(1)
 
         source_files = yaml['project']['source_files']
