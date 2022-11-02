@@ -2,6 +2,7 @@
 import requests
 import argparse
 import os
+import glob
 import yaml
 import logging
 import sys
@@ -52,7 +53,7 @@ def get_project_source(yaml):
     # else it's HDL, so check source files
     else:
         if 'source_files' not in yaml['project']:
-            logging.error("source files must be provided if wokiw_id is set to 0")
+            logging.error("source files must be provided if wokwi_id is set to 0")
             exit(1)
 
         source_files = yaml['project']['source_files']
@@ -91,20 +92,36 @@ def get_top_module(yaml):
 
 
 def get_stats():
-    cells = 0
-    with open('runs/wokwi/reports/synthesis/1-synthesis.AREA 0.stat.rpt') as f:
+    cells = {}
+    total = 0
+    gl_verilog = glob.glob('runs/wokwi/results/final/verilog/gl/*v')[0]
+    with open(gl_verilog) as f:
         for line in f.readlines():
-            m = re.search(r'Number of cells:\s+(\d+)', line)
+            m = re.search(r'sky130_(\S+)', line)
             if m is not None:
-                print(line)
-                cells = m.group(1)
+                total += 1
+                try:
+                    cells[m.group(1)] += 1
+                except KeyError:
+                    cells[m.group(1)] = 1
+
     with open('runs/wokwi/reports/metrics.csv') as f:
         report = list(csv.DictReader(f))[0]
-        report['cell_count'] = cells  # cell count is broken ATM
-        keys = ['OpenDP_Util', 'cell_count', 'wire_length', 'AND', 'DFF', 'NAND', 'NOR', 'OR', 'XOR', 'XNOR', 'MUX']
-        print(f'| { "|".join(keys) } |')
-        print(f'| { "|".join(["-----"] * len(keys)) } |')
-        print(f'| { "|".join(report[k] for k in keys) } |')
+
+    print('# Cell stats')
+    print()
+    print('| cell type | number |')
+    print('|-----------|--------|')
+    for key in sorted(cells.keys()):
+        print('| {} | {} |'.format(key, cells[key]))
+    print('| total | {} |'.format(total))
+
+    print()
+    print('# Routing stats')
+    print()
+    print('| Utilisation | Wire length (um) |')
+    print('|-------------|------------------|')
+    print('| {} | {} |'.format(report['OpenDP_Util'], report['wire_length']))
 
 
 if __name__ == '__main__':
