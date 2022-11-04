@@ -59,7 +59,7 @@ jobs:
     #- name: add summary
     #  run: ./configure.py --get-stats >> $GITHUB_STEP_SUMMARY
     - name: cell usage summary
-       run: |
+      run: |
         git clone https://github.com/TinyTapeout/sssummarizer
         sssummarizer/sssummarizer.py --gl ~/runs/wokwi/results/final/verilog/gl/*.v --print-summary --print-category >> $GITHUB_STEP_SUMMARY
 
