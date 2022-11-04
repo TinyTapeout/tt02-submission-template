@@ -61,7 +61,7 @@ jobs:
     - name: cell usage summary
       run: |
         git clone https://github.com/TinyTapeout/sssummarizer
-        sssummarizer/sssummarizer.py --gl ~/runs/wokwi/results/final/verilog/gl/*.v --print-summary --print-category >> $GITHUB_STEP_SUMMARY
+        sssummarizer/sssummarizer.py --gl runs/wokwi/results/final/verilog/gl/*.v --print-summary --print-category >> $GITHUB_STEP_SUMMARY
 
     - name: populate src cache
       uses: actions/cache@v3
