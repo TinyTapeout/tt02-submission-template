@@ -103,31 +103,9 @@ def get_top_module(yaml):
 
 
 def get_stats():
-    cells = {}
-    total = 0
-    gl_verilog = glob.glob('runs/wokwi/results/final/verilog/gl/*v')[0]
-    with open(gl_verilog) as f:
-        for line in f.readlines():
-            m = re.search(r'sky130_(\S+)', line)
-            if m is not None:
-                total += 1
-                try:
-                    cells[m.group(1)] += 1
-                except KeyError:
-                    cells[m.group(1)] = 1
-
     with open('runs/wokwi/reports/metrics.csv') as f:
         report = list(csv.DictReader(f))[0]
 
-    print('# Cell stats')
-    print()
-    print('| cell type | number |')
-    print('|-----------|--------|')
-    for key in sorted(cells.keys()):
-        print('| {} | {} |'.format(key, cells[key]))
-    print('| total | {} |'.format(total))
-
-    print()
     print('# Routing stats')
     print()
     print('| Utilisation | Wire length (um) |')
