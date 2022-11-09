@@ -48,7 +48,7 @@ set ::env(DECAP_CELL) "\
 #set ::env(CLOCK_TREE_SYNTH) 0
 #set ::env(CLOCK_PORT) ""
 # clock
-set ::env(CLOCK_PERIOD) "100000"
+set ::env(CLOCK_PERIOD) "10000000"
 set ::env(CLOCK_PORT) {io_in[0]}
 
 # hold/slack margin
