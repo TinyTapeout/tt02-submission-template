@@ -44,9 +44,16 @@ set ::env(DECAP_CELL) "\
     sky130_fd_sc_hd__decap_8 \
     sky130_ef_sc_hd__decap_12"
 
+## clock
+#set ::env(CLOCK_TREE_SYNTH) 0
+#set ::env(CLOCK_PORT) ""
 # clock
-set ::env(CLOCK_TREE_SYNTH) 0
-set ::env(CLOCK_PORT) ""
+set ::env(CLOCK_PERIOD) "10000"
+set ::env(CLOCK_PORT) {io_in[0]}
+
+# hold/slack margin
+set ::env(PL_RESIZER_HOLD_SLACK_MARGIN) 0.8 
+set ::env(GLB_RESIZER_HOLD_SLACK_MARGIN) 0.8 
 
 # don't use power rings or met5
 set ::env(DESIGN_IS_CORE) 0
