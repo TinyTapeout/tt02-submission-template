@@ -160,4 +160,5 @@ if __name__ == '__main__':
         config = load_yaml(args.yaml)
         source_files = get_project_source(config)
         top_module = get_top_module(config)
+        assert top_module != 'top'
         write_user_config(top_module, source_files)
