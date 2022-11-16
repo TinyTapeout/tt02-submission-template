@@ -93,9 +93,9 @@ module dffsr_cell (
 
     always @(posedge clk or posedge s or posedge r) begin
         if (r)
-            q <= '0;
+            q <= 0;
         else if (s)
-            q <= '1;
+            q <= 1;
         else
             q <= d;
     end
