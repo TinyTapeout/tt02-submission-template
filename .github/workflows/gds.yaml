@@ -33,7 +33,7 @@ jobs:
     - name: setup python
       uses: actions/setup-python@v4
       with:
-        python-version: '3.7.7'
+        python-version: '3.10'
     - run: pip install requests PyYAML
 
     # fetch the Verilog from Wokwi API
@@ -56,8 +56,15 @@ jobs:
     - name: show files
       run: find runs/wokwi/
 
+    # print some routing stats
     - name: add summary
       run: ./configure.py --get-stats >> $GITHUB_STEP_SUMMARY
+
+    # print some cell stats
+    - name: cell usage summary
+      run: |
+        git clone https://github.com/TinyTapeout/sssummarizer
+        sssummarizer/sssummarizer.py --gl runs/wokwi/results/final/verilog/gl/*.v --print-category >> $GITHUB_STEP_SUMMARY
 
     - name: populate src cache
       uses: actions/cache@v3

@@ -44,10 +44,21 @@ def get_project_source(yaml):
             logging.warning("couldn't download {}".format(url))
             exit(1)
 
-        # otherwise write it out
         filename = "user_module_{}.v".format(wokwi_id)
         with open(os.path.join('src', filename), 'wb') as fh:
             fh.write(r.content)
+
+        # also fetch the wokwi diagram
+        url = "https://wokwi.com/api/projects/{}/diagram.json".format(wokwi_id)
+        logging.info("trying to download {}".format(url))
+        r = requests.get(url)
+        if r.status_code != 200:
+            logging.warning("couldn't download {}".format(url))
+            exit(1)
+
+        with open(os.path.join('src', "wokwi_diagram.json"), 'wb') as fh:
+            fh.write(r.content)
+
         return [filename, 'cells.v']
 
     # else it's HDL, so check source files
@@ -92,31 +103,9 @@ def get_top_module(yaml):
 
 
 def get_stats():
-    cells = {}
-    total = 0
-    gl_verilog = glob.glob('runs/wokwi/results/final/verilog/gl/*v')[0]
-    with open(gl_verilog) as f:
-        for line in f.readlines():
-            m = re.search(r'sky130_(\S+)', line)
-            if m is not None:
-                total += 1
-                try:
-                    cells[m.group(1)] += 1
-                except KeyError:
-                    cells[m.group(1)] = 1
-
     with open('runs/wokwi/reports/metrics.csv') as f:
         report = list(csv.DictReader(f))[0]
 
-    print('# Cell stats')
-    print()
-    print('| cell type | number |')
-    print('|-----------|--------|')
-    for key in sorted(cells.keys()):
-        print('| {} | {} |'.format(key, cells[key]))
-    print('| total | {} |'.format(total))
-
-    print()
     print('# Routing stats')
     print()
     print('| Utilisation | Wire length (um) |')
