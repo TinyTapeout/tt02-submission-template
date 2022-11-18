@@ -15,7 +15,7 @@ project:
 # This info will be automatically collected and used to make a datasheet for the chip.
 documentation: 
   author:       ""      # Your name
-  discord:      ""      # Your discord handle
+  discord:      ""      # Your discord handle - make sure to include the # part as well
   title:        ""      # Project title
   description:  ""      # Short description of what your project does
   how_it_works: ""      # Longer description of how the project works
