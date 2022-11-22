@@ -29,9 +29,8 @@ set ::env(BOTTOM_MARGIN_MULT) 2
 
 # absolute die size
 set ::env(FP_SIZING) absolute
-set ::env(DIE_AREA) "0 0 90 120"
-set ::env(FP_CORE_UTIL) 45
-set ::env(PL_BASIC_PLACEMENT) {1}
+set ::env(DIE_AREA) "0 0 150 170"
+set ::env(FP_CORE_UTIL) 55
 
 set ::env(FP_IO_HLENGTH) 2
 set ::env(FP_IO_VLENGTH) 2
@@ -45,8 +44,13 @@ set ::env(DECAP_CELL) "\
     sky130_ef_sc_hd__decap_12"
 
 # clock
-set ::env(CLOCK_TREE_SYNTH) 0
-set ::env(CLOCK_PORT) ""
+set ::env(CLOCK_TREE_SYNTH) 1
+set ::env(CLOCK_PERIOD) "100000"
+set ::env(CLOCK_PORT) {io_in[0]}
+
+# hold/slack margin
+# set ::env(PL_RESIZER_HOLD_SLACK_MARGIN) 0.8 
+# set ::env(GLB_RESIZER_HOLD_SLACK_MARGIN) 0.8 
 
 # don't use power rings or met5
 set ::env(DESIGN_IS_CORE) 0
