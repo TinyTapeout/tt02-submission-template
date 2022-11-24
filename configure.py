@@ -80,6 +80,9 @@ def get_project_source(yaml):
             logging.error("must provide a top module name")
             exit(1)
 
+        for filename in source_files:
+            assert os.path.exists(os.path.join('src', filename))
+
         return source_files
 
 
