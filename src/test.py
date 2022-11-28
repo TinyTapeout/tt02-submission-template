@@ -10,7 +10,7 @@ lights_haz = [0b000000, 0b111111, 0b000000, 0b111111]
 @cocotb.test()
 async def thunderbird_taillight_tb(dut):
     HZ = 8
-    SYSTEM_FREQ = 12500
+    SYSTEM_FREQ = 6250
     cycles = int(SYSTEM_FREQ / HZ)
     dut._log.info("cycles {}", cycles)
 

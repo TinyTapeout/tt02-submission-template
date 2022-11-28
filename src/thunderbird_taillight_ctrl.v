@@ -5,7 +5,7 @@
 /* verilator lint_off MULTITOP */
 module thunderbird_taillight_ctrl #(
     parameter MAX_COUNT = 1000,
-    parameter SYSTEM_FREQ = 12500,
+    parameter SYSTEM_FREQ = 6250,
     parameter HZ = 8
 ) (
     input  [7:0] io_in,
@@ -82,7 +82,7 @@ module thunderbird_taillight_ctrl #(
 endmodule
 
 module divider #(
-    parameter SYSTEM_FREQ = 12500,
+    parameter SYSTEM_FREQ = 6250,
     parameter HZ = 8
 ) (
     input  clk,

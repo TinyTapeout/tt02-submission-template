@@ -29,7 +29,7 @@ module tb (
   // instantiate the DUT
   thunderbird_taillight_ctrl #(
       .MAX_COUNT  (1000),
-      .SYSTEM_FREQ(12500),
+      .SYSTEM_FREQ(6250),
       .HZ         (8)
   ) dut_i (
       .io_in (inputs),
