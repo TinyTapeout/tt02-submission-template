@@ -1,25 +1,52 @@
 [*]
 [*] GTKWave Analyzer v3.4.0 (w)1999-2022 BSI
-[*] Thu Oct 27 10:17:53 2022
+[*] Sun Nov 27 23:45:14 2022
 [*]
-[dumpfile] "/home/matt/work/asic-workshop/shuttle7/tt02-submission-template/src/tb.vcd"
-[dumpfile_mtime] "Thu Oct 27 10:17:11 2022"
-[dumpfile_size] 14468
-[savefile] "/home/matt/work/asic-workshop/shuttle7/tt02-submission-template/src/tb.gtkw"
+[dumpfile] "/home/hd/hacking/contributions/thunderbird_taillight_1965/src/tb.vcd"
+[dumpfile_mtime] "Sun Nov 27 23:43:34 2022"
+[dumpfile_size] 472862
+[savefile] "/home/hd/hacking/contributions/thunderbird_taillight_1965/src/tb.gtkw"
 [timestart] 0
-[size] 2286 698
+[size] 1848 1005
 [pos] -1 -1
-*-30.600000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-27.820538 0 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] tb.
+[treeopen] tb.dut_i.
 [sst_width] 343
 [signals_width] 264
 [sst_expanded] 1
-[sst_vpaned_height] 190
+[sst_vpaned_height] 361
+@800200
+-tb
 @28
 tb.clk
-@29
-tb.rst
 @22
-tb.segments[6:0]
+tb.inputs[7:0]
+tb.outputs[7:0]
+tb.lights[7:0]
+@28
+tb.rst
+tb.dut_i.div
+@22
+tb.dut_i.lights[5:0]
+@28
+tb.haz
+tb.left
+tb.right
+@1000200
+-tb
+@800201
+-fsm
+@29
+tb.dut_i.clk
+tb.dut_i.haz
+tb.dut_i.div
+tb.dut_i.left
+tb.dut_i.haz
+tb.dut_i.right
+@23
+tb.dut_i.state[5:0]
+@1000201
+-fsm
 [pattern_trace] 1
 [pattern_trace] 0
