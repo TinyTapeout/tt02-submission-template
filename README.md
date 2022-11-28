@@ -1,5 +1,10 @@
 ![](../../workflows/gds/badge.svg) ![](../../workflows/docs/badge.svg) ![](../../workflows/test/badge.svg)
 
+# thunderbird tail light controller
+An asic for the Ford Thunderbird. I have taken the statemachine (VHDL) from Digital Design Principles & Design, John F. Warkley
+and coded before a version in my EDX course non behavioural without hazard input.
+I like the idea to have a chip for the Thunderbird tail light as a replacement!
+
 # What is Tiny Tapeout?
 
 TinyTapeout is an educational project that aims to make it easier and cheaper than ever to get your digital designs manufactured on a real chip!
