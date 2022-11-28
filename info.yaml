@@ -1,7 +1,7 @@
 --- 
 # TinyTapeout project information
 project:
-  wokwi_id:    348953272198890067        # If using wokwi, set this to your project's ID
+  wokwi_id:    349405063877231188        # If using wokwi, set this to your project's ID
 #  source_files:        # If using an HDL, set wokwi_id as 0 and uncomment and list your source files here. Source files must be in ./src
 #    - counter.v
 #    - decoder.v
@@ -14,7 +14,7 @@ project:
 #
 # This info will be automatically collected and used to make a datasheet for the chip.
 documentation: 
-  author:       "N. Sertac Artan"      # Your name
+  author:       "Bryan Bonilla Garay and N. Sertac Artan"      # Your name
   discord:      ""      # Your discord handle - make sure to include the # part as well
   title:        "CNS TT02 Test 1"      # Project title
   description:  "First test run of CNS Lab"      # Short description of what your project does
