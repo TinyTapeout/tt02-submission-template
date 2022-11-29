@@ -78,7 +78,7 @@ jobs:
         path: runs
         key: ${{ runner.os }}-runs-${{ github.run_id }}
 
-  svg:
+  png:
     needs: gds
     runs-on: ubuntu-latest
     steps:
@@ -109,11 +109,19 @@ jobs:
         top_cells[0].write_svg('gds_render.svg')
         EOF
 
-    - name: populate svg cache
+    - name: convert to png
+      run: |
+        python -m pip install cairosvg
+        python << EOF
+        import cairosvg
+        cairosvg.svg2png(url='gds_render.svg', write_to='gds_render.png')
+        EOF
+
+    - name: populate png cache
       uses: actions/cache@v3
       with:
-        path: 'gds_render.svg'
-        key: ${{ runner.os }}-svg-${{ github.run_id }}
+        path: 'gds_render.png'
+        key: ${{ runner.os }}-png-${{ github.run_id }}
 
   viewer:
     needs: gds
@@ -177,7 +185,7 @@ jobs:
 
   pages:
     needs:
-    - svg
+    - png
     - viewer
     environment:
       name: github-pages
@@ -186,11 +194,11 @@ jobs:
       page_url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-    - name: restore svg cache
+    - name: restore png cache
       uses: actions/cache@v3
       with:
-        path: 'gds_render.svg'
-        key: ${{ runner.os }}-svg-${{ github.run_id }}
+        path: 'gds_render.png'
+        key: ${{ runner.os }}-png-${{ github.run_id }}
     - name: restore viewer cache
       uses: actions/cache@v3
       with:
@@ -234,7 +242,7 @@ jobs:
         PAGE_URL=$(echo "$PAGE_URL" | sed -e 's/\/$//')
         cat << EOF >> $GITHUB_STEP_SUMMARY
         # layout
-        ![svg]($PAGE_URL/gds_render.svg)
+        ![png]($PAGE_URL/gds_render.png)
         # viewer
         [open preview](https://gds-viewer.tinytapeout.com/?model=$PAGE_URL/tinytapeout.gds.gltf)
         EOF
