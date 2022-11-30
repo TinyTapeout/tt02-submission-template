@@ -35,6 +35,7 @@ def fetch_file(url, filename):
         exit(1)
 
     with open(filename, 'wb') as fh:
+        logging.info("written to {}".format(filename))
         fh.write(r.content)
 
 
