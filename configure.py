@@ -50,13 +50,13 @@ def get_project_source(yaml):
     # it's a wokwi project
     if wokwi_id != 0:
         url = "https://wokwi.com/api/projects/{}/verilog".format(wokwi_id)
-        src_file = os.path.join("src", "user_module_{}.v".format(wokwi_id))
-        fetch_file(url, src_file)
+        src_file = "user_module_{}.v".format(wokwi_id)
+        fetch_file(url, os.path.join("src", src_file))
 
         # also fetch the wokwi diagram
         url = "https://wokwi.com/api/projects/{}/diagram.json".format(wokwi_id)
-        diagram_file = os.path.join("src", "wokwi_diagram.json")
-        fetch_file(url, diagram_file)
+        diagram_file = "wokwi_diagram.json"
+        fetch_file(url, os.path.join("src", diagram_file))
 
         return [src_file, 'cells.v']
 
