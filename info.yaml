@@ -15,7 +15,7 @@ project:
 # This info will be automatically collected and used to make a datasheet for the chip.
 documentation: 
   author:       "Bryan Bonilla Garay, Devin Alvarez, Ishaan Singh, Yu Feng Zhou, and N. Sertac Artan"      # Your name
-  discord:      "sertacartan"      # Your discord handle - make sure to include the # part as well
+  discord:      "sertacartan#9663"      # Your discord handle - make sure to include the # part as well
   title:        "CNS TT02 Test 1:Score Board"      # Project title
   description:  "First test run of CNS Lab. Displays an 8-bit score from one of two players as a two-digit hexadecimal value."      # Short description of what your project does
   how_it_works: "Two counters keep track of user scores, which can be updated, and displayed on the 7-segment display."      # Longer description of how the project works
