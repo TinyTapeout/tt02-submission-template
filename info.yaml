@@ -4,7 +4,7 @@ project:
   wokwi_id:    0        # If using wokwi, set this to your project's ID
   source_files:        # If using an HDL, set wokwi_id as 0 and uncomment and list your source files here. Source files must be in ./src
     - stevenmburns_toplevel.v
-    - Scan.v
+    - ScanBinary.v
   top_module:  "stevenmburns_toplevel"      # put the name of your top module here, make it unique by prepending your github username
 
 # As everyone will have access to all designs, try to make it easy for someone new to your design to know what
@@ -16,9 +16,9 @@ project:
 documentation: 
   author:       "Steve Burns"      # Your name
   discord:      ""      # Your discord handle - make sure to include the # part as well
-  title:        "Chisel 24-bit GCD with scan in and out"      # Project title
+  title:        "Chisel 32-bit GCD with scan in and out"      # Project title
   description:  "Simple chisel based design using Euclid's algorithm and scan chains for I/O. Seems to fit with 32-bits"      # Short description of what your project does
-  how_it_works: "With the `ld` signal true, the `u_bit` and `v_bit` inputs are used to scan the `n` numbers into the block. Simulataneously, the high-order bit of the `u` register is scanned out. Upon lowering the `ld` signal, the Euclid iteration starts. When done, the `done` signal is raised.eltest enabled tests."      # Longer description of how the project works
+  how_it_works: "With the `ld` signal true, the `u_bit` and `v_bit` inputs are used to scan the `n` numbers into the block. Simulataneously, the high-order bit of the `u` register is scanned out. Upon lowering the `ld` signal, the Euclid iteration starts. When done, the `done` signal is raised."      # Longer description of how the project works
   how_to_test:  "Chiseltest enabled tests. Go to `chisel` and run `sbt test`."      # Instructions on how someone could test your project, include things like what buttons do what and how to set the clock if needed
   external_hw:  "None"      # Describe any external hardware needed
   language:     "Chisel" # other examples include Verilog, Amaranth, VHDL, etc
