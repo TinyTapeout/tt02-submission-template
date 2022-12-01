@@ -2,6 +2,7 @@
 
 # CNS Test Submission 1
 <img  align="center" width='800px' src = "https://github.com/NYIT-CNS/cns001-tt02-submission1/blob/main/score-board.png?raw=true">
+
 ## Score Board
 
 * Authors: Bryan Bonilla Garay, Devin Alvarez, Ishaan Singh, Yu Feng Zhou, and N. Sertac Artan
