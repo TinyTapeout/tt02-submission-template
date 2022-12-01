@@ -19,6 +19,8 @@ jobs:
     # need the repo checked out
     - name: checkout repo
       uses: actions/checkout@v3
+      with:
+        submodules: recursive
 
     # build PDK and fetch OpenLane
 
