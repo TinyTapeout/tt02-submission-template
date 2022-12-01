@@ -1,13 +1,14 @@
 ![](../../workflows/gds/badge.svg) ![](../../workflows/docs/badge.svg)
 
 # CNS Test Submission 1
+<img  align="center" width='300px' src = "https://github.com/NYIT-CNS/cns001-tt02-submission1/blob/main/score-board.png?raw=true">
 ## Score Board
 
 * Authors: Bryan Bonilla Garay, Devin Alvarez, Ishaan Singh, Yu Feng Zhou, and N. Sertac Artan
 
 * Description: Display an 8-bit score from one of two players as a two-digit hexadecimal value.
 * [GitHub repository](https://github.com/NYIT-CNS/cns001-tt02-submission1)
-* [Wokwi](https://wokwi.com/projects/349405063877231188) project
+* [Wokwi](https://wokwi.com/projects/349822052986782291) project
 * Clock: 0 Hz
 * External hardware: None
 
@@ -39,5 +40,6 @@ Updating scores (Make sure to toggle)
 <img  align="center" width='300px' src = "https://github.com/NYIT-CNS/cns001-tt02-submission1/blob/main/state-table-score-update.png?raw=true">
     
 Displaying User Score:
-  <img  align="" width='300px' src = "https://i.ibb.co/SN47pT7/Screen-Shot-2022-11-29-at-10-28-42-PM.png">
+
+  <img  align="center" width='300px' src = "https://i.ibb.co/SN47pT7/Screen-Shot-2022-11-29-at-10-28-42-PM.png">
 
