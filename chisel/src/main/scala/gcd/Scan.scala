@@ -28,5 +28,5 @@ class Scan(n : Int) extends Module {
 }
 
 object MainScan extends App {
-  emitVerilog(new Scan(24))
+  emitVerilog(new Scan(32))
 }
