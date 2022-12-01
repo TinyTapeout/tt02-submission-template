@@ -35,10 +35,8 @@ Using default settings, increment the first user score up until the second digit
 
 
 Updating scores (Make sure to toggle)
-![Score update](https://github.com/NYIT-CNS/cns001-tt02-submission1/blob/main/state-table-score-update.png?raw=true)
+![Score update](https://github.com/NYIT-CNS/cns001-tt02-submission1/blob/main/state-table-score-update.png?raw=true| width=100)
     
 Displaying User Score:
   <img  align="" width='300px' src = "https://i.ibb.co/SN47pT7/Screen-Shot-2022-11-29-at-10-28-42-PM.png">
 
-
-Test submission. Doc will be added.
