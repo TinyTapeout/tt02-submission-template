@@ -25,9 +25,26 @@ jobs:
     - name: fetch Verilog and build config
       run: ./configure.py --check-docs
 
+    # pandoc deps
+    - name: Pandoc deps
+      run: | 
+        sudo apt-get update -y
+        sudo apt-get install -y pandoc texlive-xetex
+
+    # fetch the Verilog from Wokwi API
+    - name: build datasheet
+      run: ./configure.py --build-pdf
+
     # make an artifact
     - name: upload artifact
       uses: actions/upload-artifact@v3
       with:
           name: docs
           path: info.yaml
+
+    # archive the PDF
+    - name: Archive PDF
+      uses: actions/upload-artifact@v3
+      with:
+          name: PDF
+          path: datasheet.pdf

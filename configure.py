@@ -2,12 +2,12 @@
 import requests
 import argparse
 import os
-import glob
 import yaml
 import logging
 import sys
 import csv
 import re
+import subprocess
 
 
 def load_yaml(yaml_file):
@@ -27,6 +27,18 @@ def write_user_config(module_name, sources):
         fh.write('"\n')
 
 
+def fetch_file(url, filename):
+    logging.info("trying to download {}".format(url))
+    r = requests.get(url)
+    if r.status_code != 200:
+        logging.warning("couldn't download {}".format(url))
+        exit(1)
+
+    with open(filename, 'wb') as fh:
+        logging.info("written to {}".format(filename))
+        fh.write(r.content)
+
+
 def get_project_source(yaml):
     # wokwi_id must be an int or 0
     try:
@@ -38,28 +50,15 @@ def get_project_source(yaml):
     # it's a wokwi project
     if wokwi_id != 0:
         url = "https://wokwi.com/api/projects/{}/verilog".format(wokwi_id)
-        logging.info("trying to download {}".format(url))
-        r = requests.get(url)
-        if r.status_code != 200:
-            logging.warning("couldn't download {}".format(url))
-            exit(1)
-
-        filename = "user_module_{}.v".format(wokwi_id)
-        with open(os.path.join('src', filename), 'wb') as fh:
-            fh.write(r.content)
+        src_file = "user_module_{}.v".format(wokwi_id)
+        fetch_file(url, os.path.join("src", src_file))
 
         # also fetch the wokwi diagram
         url = "https://wokwi.com/api/projects/{}/diagram.json".format(wokwi_id)
-        logging.info("trying to download {}".format(url))
-        r = requests.get(url)
-        if r.status_code != 200:
-            logging.warning("couldn't download {}".format(url))
-            exit(1)
+        diagram_file = "wokwi_diagram.json"
+        fetch_file(url, os.path.join("src", diagram_file))
 
-        with open(os.path.join('src', "wokwi_diagram.json"), 'wb') as fh:
-            fh.write(r.content)
-
-        return [filename, 'cells.v']
+        return [src_file, 'cells.v']
 
     # else it's HDL, so check source files
     else:
@@ -102,8 +101,41 @@ def check_docs(yaml):
     if len(yaml['documentation']['discord']):
         parts = yaml['documentation']['discord'].split('#')
         if len(parts) != 2 or len(parts[0]) == 0 or not re.match('^[0-9]{4}$', parts[1]):
-            logging.error(f'Invalid format for discord username')
+            logging.error('Invalid format for discord username')
             exit(1)
+
+
+def build_pdf(yaml_data):
+    with open(".github/workflows/doc_header.md") as fh:
+        doc_header = fh.read()
+    with open(".github/workflows/doc_preview.md") as fh:
+        doc_template = fh.read()
+
+    with open('datasheet.md', 'w') as fh:
+        fh.write(doc_header)
+        # handle pictures
+        yaml_data['picture_link'] = ''
+        if yaml_data['picture']:
+            # skip SVG for now, not supported by pandoc
+            picture_name = yaml_data['picture']
+            if 'svg' not in picture_name:
+                yaml_data['picture_link'] = '![picture]({})'.format(picture_name)
+            else:
+                logging.warning("svg not supported")
+
+        # now build the doc & print it
+        try:
+            doc = doc_template.format(**yaml_data)
+            fh.write(doc)
+            fh.write("\n\pagebreak\n")
+        except IndexError:
+            logging.warning("missing pins in info.yaml, skipping")
+
+    pdf_cmd = 'pandoc --pdf-engine=xelatex -i datasheet.md -o datasheet.pdf'
+    logging.info(pdf_cmd)
+    p = subprocess.run(pdf_cmd, shell=True)
+    if p.returncode != 0:
+        logging.error("pdf command failed")
 
 
 def get_top_module(yaml):
@@ -129,6 +161,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="TT setup")
 
     parser.add_argument('--check-docs', help="check the documentation part of the yaml", action="store_const", const=True)
+    parser.add_argument('--build-pdf', help="build a single page PDF", action="store_const", const=True)
     parser.add_argument('--get-stats', help="print some stats from the run", action="store_const", const=True)
     parser.add_argument('--create-user-config', help="create the user_config.tcl file with top module and source files", action="store_const", const=True)
     parser.add_argument('--debug', help="debug logging", action="store_const", dest="loglevel", const=logging.DEBUG, default=logging.INFO)
@@ -155,6 +188,11 @@ if __name__ == '__main__':
         logging.info("checking docs")
         config = load_yaml(args.yaml)
         check_docs(config)
+
+    elif args.build_pdf:
+        logging.info("building pdf")
+        config = load_yaml(args.yaml)
+        build_pdf(config['documentation'])
 
     elif args.create_user_config:
         logging.info("creating include file")
