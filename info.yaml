@@ -17,10 +17,10 @@ documentation:
   author:       "Steve Burns"      # Your name
   discord:      ""      # Your discord handle - make sure to include the # part as well
   title:        "Chisel 24-bit GCD with scan in and out"      # Project title
-  description:  ""      # Short description of what your project does
-  how_it_works: ""      # Longer description of how the project works
-  how_to_test:  ""      # Instructions on how someone could test your project, include things like what buttons do what and how to set the clock if needed
-  external_hw:  ""      # Describe any external hardware needed
+  description:  "Simple chisel based design using Euclid's algorithm and scan chains for I/O. Seems to fit with 32-bits"      # Short description of what your project does
+  how_it_works: "With the `ld` signal true, the `u_bit` and `v_bit` inputs are used to scan the `n` numbers into the block. Simulataneously, the high-order bit of the `u` register is scanned out. Upon lowering the `ld` signal, the Euclid iteration starts. When done, the `done` signal is raised.eltest enabled tests."      # Longer description of how the project works
+  how_to_test:  "Chiseltest enabled tests. Go to `chisel` and run `sbt test`."      # Instructions on how someone could test your project, include things like what buttons do what and how to set the clock if needed
+  external_hw:  "None"      # Describe any external hardware needed
   language:     "Chisel" # other examples include Verilog, Amaranth, VHDL, etc
   doc_link:     ""      # URL to longer form documentation, eg the README.md in your repository
   clock_hz:     0       # Clock frequency in Hz (if required) we are expecting max clock frequency to be ~6khz. Provided on input 0.
