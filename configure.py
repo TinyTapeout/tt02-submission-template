@@ -81,7 +81,9 @@ def get_project_source(yaml):
             exit(1)
 
         for filename in source_files:
-            assert os.path.exists(os.path.join('src', filename))
+            if not os.path.exists(os.path.join('src', filename)):
+                logging.error(f"{filename} doesn't exist in the repo")
+                exit(1)
 
         return source_files
 
@@ -159,5 +161,7 @@ if __name__ == '__main__':
         config = load_yaml(args.yaml)
         source_files = get_project_source(config)
         top_module = get_top_module(config)
-        assert top_module != 'top'
+        if top_module == 'top':
+            logging.error("top module cannot be called top - prepend your repo name to make it unique")
+            exit(1)
         write_user_config(top_module, source_files)
