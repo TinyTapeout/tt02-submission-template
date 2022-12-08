@@ -6,6 +6,9 @@ project:
 #    - counter.v
 #    - decoder.v
 #  top_module:  "seven_segment_seconds"      # put the name of your top module here, make it unique by prepending your github username
+  
+# keep a track of the submission yaml
+yaml_version: 2.1
 
 # As everyone will have access to all designs, try to make it easy for someone new to your design to know what
 # it does and how to operate it.
